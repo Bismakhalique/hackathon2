@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <!-- Firebase scripts
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script> -->
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+  }
+
+  .header {
+    background-color: #3498db;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    width: 1000px;
+padding: 32px 160px;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+  }
+
+  .container {
+    width: 300px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .formgroup {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .login-button {
+    display: block;
+    width: 100%;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .login-button:hover {
+    background-color: #2980b9;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Login</h1>
+  </div>
+  <div class="container">
+    <form id="login-form">
+      <div class="formgroup">
+        <label for="username">Email</label>
+        <input type="text" id="email" name="email" required>
+      </div>
+      <div class="formgroup">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="login-button">login</button>
+    </form>
+  </div>
+
+  <script>
+
+  const firebaseConfig = {
+       
+    apiKey: "AIzaSyD_IlgCjVWF3yPNKveeVHdZi77Nn0AupPQ",
+    authDomain: "smit-project-293db.firebaseapp.com",
+    databaseURL: "https://smit-project-293db-default-rtdb.firebaseio.com",
+    projectId: "smit-project-293db",
+    storageBucket: "smit-project-293db.appspot.com",
+    messagingSenderId: "37947608465",
+    appId: "1:37947608465:web:3bd9f6c26094a8fea5de30",
+    measurementId: "G-7TH7WNBC0P"
+  };
+  
+  
+const signinForm = document.getElementById('login-form');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+
+signinForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  try {
+    // Sign in user with email and password using Firebase Authentication
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+
+    console.log('User logged in successfully.');
+    window.location.href = './dashboard.html'; // Replace with your desired URL
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // console.error(errorCode + ': ' + errorMessage);
+  }
+});
+</script>
+
+
+              

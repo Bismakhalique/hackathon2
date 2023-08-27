@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+  }
+
+  .header {
+    background-color: #3498db;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+width: 1000px;
+padding: 32px 160px;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+  }
+
+  .container {
+    width: 300px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .signup-button {
+    display: block;
+    width: 100%;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .signup-button:hover {
+    background-color: #2980b9;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Sign Up</h1>
+  </div>
+  <div class="container">
+    <form id="signup-form">
+      <div class="form-group">
+        <label for="username">First Name</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Last Name</label>
+        <input type="text" id="lastname" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="password"> Rename Password</label>
+        <input type="password" id="repassword" name="password" required>
+      </div>
+      <button type="submit" class="signup-button">Sign Up</button>
+    </form>
+  </div>
+  <script>
+    const firebaseConfig = {
+       
+  apiKey: "AIzaSyD_IlgCjVWF3yPNKveeVHdZi77Nn0AupPQ",
+  authDomain: "smit-project-293db.firebaseapp.com",
+  databaseURL: "https://smit-project-293db-default-rtdb.firebaseio.com",
+  projectId: "smit-project-293db",
+  storageBucket: "smit-project-293db.appspot.com",
+  messagingSenderId: "37947608465",
+  appId: "1:37947608465:web:3bd9f6c26094a8fea5de30",
+  measurementId: "G-7TH7WNBC0P"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+      
+      const contactForm = document.getElementById('signup-form');
+      contactForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          const username = document.getElementById('username').value;
+          const contact = document.getElementById('lastname').value;
+          const email = document.getElementById('Email').value;
+          const password = document.getElementById('password').value;
+          const repeatpassword = document.getElementById('repassword').value;
+
+          try {
+              const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+              // User creation successful, store additional data
+              const user = userCredential.user;
+              const usersRef = firebase.database().ref('users');
+              usersRef.push({
+                  uid: user.uid,
+                  username: username,
+                  contact: contact,
+                  email: email,
+                  password: password
+              });
+
+              const userObject = { email: Email };
+              sessionStorage.setItem('user', JSON.stringify(userObject));
+
+              console.log('User created successfully.');
+              window.location.href = './login.html';
+          } catch (error) {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.error(errorCode + ': ' + errorMessage);
+          }
+      });
+
+  </script>
+
+ 
+
+
+
+
+</body>
+</html>
